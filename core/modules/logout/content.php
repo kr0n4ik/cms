@@ -8,5 +8,8 @@ if( !defined( "ROOT" ) ) {
 if ( !$global['user']['loged'] )
 	header( "Location: {$config['url_home']}index.php?url=login" );
 
-include_once(DIR_ROOT . "/core/modules/profile/content.php");
+$db->query("UPDATE {$config['sql_prefix']}_users SET session='none' WHERE id={$global['user']['id']};");
+unset( $_SESSION['session'] );
+setcookie( "session", "", "60");
+header("Location: {$config['url_home']}");
 ?>

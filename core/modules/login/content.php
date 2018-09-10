@@ -13,7 +13,6 @@ $alert = "";
 
 function goLogin(){
 	global $alert, $db, $sql, $config;
-	
 	$email = strtolower( trim( $_POST['email'] ) );
 	
 	if ( !preg_match( "/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/", $email ) ) {
@@ -21,7 +20,7 @@ function goLogin(){
 		return false;
 	}
 	
-	$row = $db->fetchrow( $db->query( "SELECT password FROM {$sql['prefix']}_users WHERE email='{$email}';" ) );
+	$row = $db->fetchrow( $db->query( "SELECT password FROM {$config['sql_prefix']}_users WHERE email='{$email}';" ) );
 	if (!$row) {
 		$alert = "<div class=\"alert alert-danger\">Пользователь с логином {$_POST['email']} не зарегистрирован.</div>";
 		return false;
@@ -37,7 +36,7 @@ function goLogin(){
 	
 	$session = md5( time() . $password . rand( 0, 999 ) . $global['ip'] );
 	$_SESSION['session'] = $session;
-	$db->query("UPDATE {$sql['prefix']}_users SET session='{$session}' WHERE email='{$email}';");
+	$db->query("UPDATE {$config['sql_prefix']}_users SET session='{$session}' WHERE email='{$email}';");
 	
 	if ( isset( $_POST['remember'] ) )
 		setcookie( "session", $session, $global['time'] + ( $config['time_session'] * 60 * 60 ) );

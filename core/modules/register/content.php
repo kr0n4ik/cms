@@ -4,7 +4,7 @@ if( !defined( "ROOT" ) ) {
 	header( "Location: ../" ); 
 	die( "Hacking attempt!" ); 
 }
-
+	
 if ( $global['user']['loged'] )
 	header( "Location: {$config['url_home']}index.php" );
 
@@ -12,6 +12,7 @@ $alert = "";
 
 function goReg(){
 	global $alert, $db, $config;
+	$parent = "";
 	$email = strtolower( trim( $_POST['email'] ) );
 	
 	if ( !preg_match( "/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/", $email ) ) {
@@ -39,13 +40,18 @@ function goReg(){
 		return false;
 	}
 	
+	$code = strtolower( trim( $global['url'][1] ) );
+	if ( preg_match( "/^[a-z0-9]+$/iu", $code )  )
+		if ( $db->numrows( $db->query("SELECT code FROM {$config['sql_prefix']}_users WHERE code='{$code}' AND rights='partner';" ) ) != 0 )
+			$parent = $code;
+	
 	$password = trim( $_POST['passwordone'] );
 	$password = md5( $password . md5( $password ) . $config['salt'] . "\n" );
 	$time = $global['time'] + ( $config['time_session'] * 60 * 60 );
 	$hash = md5( time() . $password . rand( 0, 999 ) . $global['ip'] );
 	$_SESSION['session'] = $hash;
 	
-	if ( $db->query( "INSERT INTO {$config['sql_prefix']}_users SET password='{$password}', email='{$email}', session='{$session}';" ) )
+	if ( $db->query( "INSERT INTO {$config['sql_prefix']}_users SET password='{$password}', email='{$email}', session='{$session}', parent='{$parent}';" ) )
 		header("Location: {$config['url_home']}");
 }
 
