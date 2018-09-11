@@ -7,7 +7,7 @@
 @ini_set( "display_errors", true );
 @ini_set( "html_errors", true );
 @error_reporting ( E_ERROR  );
-@ini_set( "error_reporting", E_ALL );
+@ini_set( "error_reporting", E_ERROR );
 
 define( "ROOT", true );
 define( "DIR_ROOT", dirname( __FILE__ ) );
@@ -15,6 +15,9 @@ define( "DIR_ROOT", dirname( __FILE__ ) );
 require_once DIR_ROOT . "/config/global.cfg.php";
 require_once DIR_ROOT . "/core/classes/mysqli.class.php";
 require_once DIR_ROOT . "/core/classes/template.class.php";
+
+if ($config['debug'] == "Y")
+	@ini_set( "error_reporting", E_ALL );
 
 $db = new db( $config['sql_server'], $config['sql_user'], $config['sql_password'], $config['sql_database'] );
 $global = array( 

@@ -4,7 +4,7 @@ $config = array (
 
 'url_home' => "http://localhost/cms/",
 
-'debug' => "yes",
+'debug' => "N",
 
 'cache' => "no",
 

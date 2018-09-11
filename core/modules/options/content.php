@@ -41,5 +41,19 @@ if( $_POST['up'] == "Y" ) {
 
 $options = new Template("options.tpl");
 $options->assign("{url_home}", $config['url_home']);
+$options->assign("{sql_server}", $config['sql_server']);
+$options->assign("{sql_user}", $config['sql_user']);
+$options->assign("{sql_password}", $config['sql_password']);
+$options->assign("{sql_database}", $config['sql_database']);
+$options->assign("{sql_prefix}", $config['sql_prefix']);
+$options->assign("{tz}", $config['tz']);
+$options->assign("{date}", date('d.m.Y, H:i', time() + $config['tz'] * 60 ) );
+if ($config['debug'] == "Y") {
+	$options->assign("{debug_y}", "checked" );
+	$options->assign("{debug_n}", "" );
+} else {
+	$options->assign("{debug_n}", "checked" );
+	$options->assign("{debug_y}", "" );
+}
 $options->display();
 ?>
