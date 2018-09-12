@@ -5,12 +5,13 @@
 <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<title>Color Admin | Timeline</title>
+	<title>Color Admin | Managed Tables</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="{template}assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
 	<link href="{template}assets/plugins/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="{template}assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css" rel="stylesheet" />
@@ -21,9 +22,9 @@
 	<!-- ================== END BASE CSS STYLE ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
-		<link href="{template}assets/plugins/isotope/isotope.css" rel="stylesheet" />
-		<link href="{template}assets/plugins/lightbox/css/lightbox.css" rel="stylesheet" />
-		<!-- ================== END PAGE LEVEL STYLE ================== -->
+	<link href="{template}assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	<link href="{template}assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
 	
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="{template}assets/plugins/pace/pace.min.js"></script>
@@ -51,6 +52,14 @@
 			
 			<!-- begin header-nav -->
 			<ul class="navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Enter keyword" />
+							<button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+						</div>
+					</form>
+				</li>
 				<li class="dropdown">
 					<a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14">
 						<i class="fa fa-bell"></i>
@@ -72,11 +81,11 @@
 						<li class="media">
 							<a href="javascript:;">
 								<div class="media-left">
-									<img src="{template}assets/img/user/{avatar}" class="media-object" alt="" />
+									<img src="{template}assets/img/user/user-1.jpg" class="media-object" alt="" />
 									<i class="fab fa-facebook-messenger text-primary media-object-icon"></i>
 								</div>
 								<div class="media-body">
-									<h6 class="media-heading">{nameone} {nametwo}</h6>
+									<h6 class="media-heading">John Smith</h6>
 									<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
 									<div class="text-muted f-s-11">25 minutes ago</div>
 								</div>
@@ -185,71 +194,31 @@
 		<!-- end #sidebar -->
 		
 		<!-- begin #content -->
-		<div id="content" class="content content-full-width">
-			<div class="panel-body">
-				<form method="POST">
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Домашняя страница сайта</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="http://test.com/" name="save[url_home]" value="{url_home}" />
-							<small class="f-s-12 text-grey-darker">Укажите имя основного домена на котором располагается ваш сайт. Например: http://yoursite.com/ Внимание, наличие слеша на конце в имени домена обязательно.</small>
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Имя сервера базы данных</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="localhost" name="save[sql_server]" value="{sql_server}" />
-							<small class="f-s-12 text-grey-darker">Обычно это "localhost".</small>
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Имя пользователя базы данных</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="root" name="save[sql_user]" value="{sql_user}" />
-							<small class="f-s-12 text-grey-darker">Обычно это "root".</small>
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Пароль пользователя базы данных</label>
-						<div class="col-md-9">
-							<input type="password" class="form-control m-b-5" placeholder="password" name="save[sql_password]" value="{sql_password}" />
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Имя базы данных</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="database" name="save[sql_database]" value="{sql_database}" />
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Префикс таблиц</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="prefix" name="save[sql_prefix]" value="{sql_prefix}" />
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-						<label class="col-form-label col-md-3">Коррекция временных зон</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control m-b-5" placeholder="60" name="save[tz]" value="{tz}" />
-							<small class="f-s-12 text-grey-darker">в минутах; т.е.: 180=+3 часа; -120=-2 часа. Текущее время сервера с учетом коррекции: {date}</small>
-						</div>
-					</div>
-					<div class="form-group row m-b-15">
-                        <label class="col-md-3 col-form-label">Включить отладку</label>
-                        <div class="col-md-9">
-                            <div class="radio radio-css radio-inline">
-                                <input type="radio" name="save[debug]" id="inlineCssRadio1" value="Y" {debug_y} />
-								<label for="inlineCssRadio1">Да</label>
-							</div>
-                            <div class="radio radio-css radio-inline">
-                                <input type="radio" name="save[debug]" id="inlineCssRadio2" value="N" {debug_n} />
-                                <label for="inlineCssRadio2">Нет</label>
-                            </div>
-                        </div>
-                    </div>
-					<button type="sybmit" class="btn btn-primary float-right" name="up" value="Y">Сохарнить</button>
-				</form>
+		<div id="content" class="content">
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<!-- begin panel-body -->
+				<div class="panel-body">
+					<table id="data-table-default" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th width="1%"></th>
+								<th width="1%" data-orderable="false"></th>
+								<th class="text-nowrap">E-mail</th>
+								<th class="text-nowrap">Фамилия</th>
+								<th class="text-nowrap">Имя</th>
+								<th class="text-nowrap">Группа</th>
+								<th class="text-nowrap">Функции</th>
+							</tr>
+						</thead>
+						<tbody>
+							{tbody}
+						</tbody>
+					</table>
+				</div>
+				<!-- end panel-body -->
 			</div>
+			<!-- end panel -->
 		</div>
 		<!-- end #content -->
 		
@@ -275,14 +244,16 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-	<script src="{template}assets/plugins/isotope/jquery.isotope.min.js"></script>
-  	<script src="{template}assets/plugins/lightbox/js/lightbox.min.js"></script>
-	<script src="{template}assets/js/demo/gallery.demo.min.js"></script>
+	<script src="{template}assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+	<script src="{template}assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+	<script src="{template}assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+	<script src="{template}assets/js/demo/table-manage-default.demo.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
+	
 	<script>
 		$(document).ready(function() {
 			App.init();
-			Gallery.init();
+			TableManageDefault.init();
 		});
 	</script>
 </body>

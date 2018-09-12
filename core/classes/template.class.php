@@ -17,6 +17,7 @@ class Template {
 		$this->assign("{menu}", "<li><a href=\"{$config['url_home']}index.php?url=ticket\"><i class=\"fa fa-calendar\"></i> <span>Тех. поддержка</span></a></li>");
 		if ( $global['user']['rights'] == "admin" ) {
 			$this->assign("{menu}", "<li><a href=\"{$config['url_home']}index.php?url=options\"><i class=\"fa fa-calendar\"></i> <span>Настройки</span></a></li>");
+			$this->assign("{menu}", "<li><a href=\"{$config['url_home']}index.php?url=users\"><i class=\"fa fa-calendar\"></i> <span>Пользователи</span></a></li>");
 		}
 	}
 	
