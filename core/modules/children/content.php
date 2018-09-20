@@ -5,10 +5,8 @@ if( !defined( "ROOT" ) ) {
 	die( "Hacking attempt!" ); 
 }
 
-if ( !$global['user']['loged'] || $global['user']['rights'] != "admin")
+if ( !$global['user']['loged'] || $global['user']['rights'] != "partner")
 	header( "Location: {$config['url_home']}" );
-
-$rights = array('admin' => "Администратор", 'moderator' => "Модератор", 'partner' => "Партнер", 'user' => "Клиент");
 
 if ($global['url'][1] == "") {
 $template['content'] .= <<<HTML
@@ -55,7 +53,7 @@ $template['content'] .= <<<HTML
 						<tbody>
 HTML;
 $n = 1;
-$result = $db->query( "SELECT * FROM {$config['sql_prefix']}_users;"); //WHERE  mid={$global['user']['id']};" );
+$result = $db->query( "SELECT * FROM {$config['sql_prefix']}_users WHERE parent={$global['user']['id']};"); //WHERE  mid={$global['user']['id']};" );
 while ( $row = $db->fetchrow( $result ) ) {
 	$template['content'] .= "<tr><td width=\"1%\" class=\"f-s-600 text-inverse\">{$n}</td><td width=\"1%\" class=\"with-img\"><img src=\"{$config['url_home']}upload/avatar/{$row['avatar']}\" class=\"img-rounded height-30\" /></td><td>{$row['email']}</td><td>{$row['nameone']} {$row['nametwo']}</td><td>{$row['balance']}</td><td>{$rights[$row['rights']]}</td><td><a href=\"{$config['url_home']}index.php?url=users/profile/{$row['id']}\">edit</a></td></tr>\n";
 	$n++;

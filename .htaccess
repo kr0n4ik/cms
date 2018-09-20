@@ -1,0 +1,14 @@
+DirectoryIndex index.php index.html index.htm
+
+RewriteEngine On
+#SEO
+RewriteCond %{HTTP_HOST} .
+RewriteCond %{HTTP_HOST} 134\.0\.117\.69 [NC]
+RewriteRule (.*) http://134.0.117.69/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*).html$ index.php?url=static/$1 [L]
+RewriteRule ^rss.xml$ rss.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?url=$1 [L]

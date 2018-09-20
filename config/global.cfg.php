@@ -52,7 +52,9 @@ $config = array (
 
 'transfer_purse' => "",
 
-'describe' => "",
+'lng' => "ru",
+
+'aid' => "1,2",
 
 );
 

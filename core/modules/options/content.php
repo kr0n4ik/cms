@@ -39,21 +39,87 @@ if( $_POST['up'] == "Y" ) {
 	exit;
 }
 
-$options = new Template("options.tpl");
-$options->assign("{url_home}", $config['url_home']);
-$options->assign("{sql_server}", $config['sql_server']);
-$options->assign("{sql_user}", $config['sql_user']);
-$options->assign("{sql_password}", $config['sql_password']);
-$options->assign("{sql_database}", $config['sql_database']);
-$options->assign("{sql_prefix}", $config['sql_prefix']);
-$options->assign("{tz}", $config['tz']);
-$options->assign("{date}", date('d.m.Y, H:i', time() + $config['tz'] * 60 ) );
-if ($config['debug'] == "Y") {
-	$options->assign("{debug_y}", "checked" );
-	$options->assign("{debug_n}", "" );
-} else {
-	$options->assign("{debug_n}", "checked" );
-	$options->assign("{debug_y}", "" );
-}
-$options->display();
+$date = date('d.m.Y, H:i', time() + $config['tz'] * 60 );
+if ($config['debug'] == "Y") 
+	$debug_y = "checked";
+else
+	$debug_n = "checked";
+$template['content'] .= <<<HTML
+		<!-- begin #content -->
+		<div id="content" class="content content-full-width">
+			<div class="panel-body">
+				<form method="POST">
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Домашняя страница сайта</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="http://test.com/" name="save[url_home]" value="{$config['url_home']}" />
+							<small class="f-s-12 text-grey-darker">Укажите имя основного домена на котором располагается ваш сайт. Например: http://yoursite.com/ Внимание, наличие слеша на конце в имени домена обязательно.</small>
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Имя сервера базы данных</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="localhost" name="save[sql_server]" value="{$config['sql_server']}" />
+							<small class="f-s-12 text-grey-darker">Обычно это "localhost".</small>
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Имя пользователя базы данных</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="root" name="save[sql_user]" value="{$config['sql_user']}" />
+							<small class="f-s-12 text-grey-darker">Обычно это "root".</small>
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Пароль пользователя базы данных</label>
+						<div class="col-md-9">
+							<input type="password" class="form-control m-b-5" placeholder="password" name="save[sql_password]" value="{$config['sql_password']}" />
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Имя базы данных</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="database" name="save[sql_database]" value="{$config['sql_database']}" />
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Префикс таблиц</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="prefix" name="save[sql_prefix]" value="{$config['sql_prefix']}" />
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Коррекция временных зон</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="60" name="save[tz]" value="{$config['tz']}" />
+							<small class="f-s-12 text-grey-darker">в минутах; т.е.: 180=+3 часа; -120=-2 часа. Текущее время сервера с учетом коррекции: {$date}</small>
+						</div>
+					</div>
+					<div class="form-group row m-b-15">
+                        <label class="col-md-3 col-form-label">Включить отладку</label>
+                        <div class="col-md-9">
+                            <div class="radio radio-css radio-inline">
+                                <input type="radio" name="save[debug]" id="inlineCssRadio1" value="Y" {$debug_y} />
+								<label for="inlineCssRadio1">Да</label>
+							</div>
+                            <div class="radio radio-css radio-inline">
+                                <input type="radio" name="save[debug]" id="inlineCssRadio2" value="N" {$debug_n} />
+                                <label for="inlineCssRadio2">Нет</label>
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group row m-b-15">
+						<label class="col-form-label col-md-3">Администраторы</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control m-b-5" placeholder="0" name="save[aid]" value="{$config['aid']}" />
+							<small class="f-s-12 text-grey-darker">id администраторв через запятую, для оповещений</small>
+						</div>
+					</div>
+					<button type="sybmit" class="btn btn-primary float-right" name="up" value="Y">Сохарнить</button>
+				</form>
+			</div>
+		</div>
+		<!-- end #content -->
+HTML;
+include_once(DIR_ROOT . "/core/app.php");
 ?>
