@@ -6,7 +6,7 @@ if( !defined( "ROOT" ) ) {
 }
 
 if ( !$global['user']['loged'])
-	header( "Location: {$config['url_home']}" );
+	header( "Location: {$config['url_home']}login" );
 
 $rights = array('admin' => "Администратор", 'moderator' => "Модератор", 'partner' => "Партнер", 'user' => "Клиент");
 

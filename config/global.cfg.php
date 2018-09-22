@@ -14,11 +14,11 @@ $config = array (
 
 'sql_server' => "localhost",
 
-'sql_user' => "root",
+'sql_user' => "non-root",
 
-'sql_password' => "",
+'sql_password' => "123456",
 
-'sql_database' => "web",
+'sql_database' => "test",
 
 'sql_prefix' => "cms",
 

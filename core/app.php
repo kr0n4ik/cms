@@ -42,7 +42,17 @@
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 		<!-- begin #header -->
 		<div id="header" class="header navbar-default">
-		<!-- begin header-nav -->
+			<!-- begin navbar-header -->
+			<div class="navbar-header">
+				<a href="<?php echo $config['url_home']; ?>" class="navbar-brand"><span class="navbar-logo"></span> <b>Биг</b> Сайт</a>
+				<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- end navbar-header -->
+			<!-- begin header-nav -->
 			<ul class="navbar-nav navbar-right">
 				<li>
 					<form class="navbar-form">
